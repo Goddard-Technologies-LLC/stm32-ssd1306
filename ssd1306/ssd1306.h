@@ -9,38 +9,38 @@
 #define __SSD1306_H__
 
 #include <stddef.h>
-#include <_ansi.h>
-
-_BEGIN_STD_C
-
+//#include <_ansi.h>
+//
+//_BEGIN_STD_C
+//
 #include "ssd1306_conf.h"
 
-#if defined(STM32F0)
-#include "stm32f0xx_hal.h"
-#elif defined(STM32F1)
-#include "stm32f1xx_hal.h"
-#elif defined(STM32F4)
-#include "stm32f4xx_hal.h"
-#include "stm32f4xx_hal_gpio.h"
-#elif defined(STM32L0)
-#include "stm32l0xx_hal.h"
-#elif defined(STM32L1)
-#include "stm32l1xx_hal.h"
-#elif defined(STM32L4)
-#include "stm32l4xx_hal.h"
-#elif defined(STM32F3)
-#include "stm32f3xx_hal.h"
-#elif defined(STM32H7)
-#include "stm32h7xx_hal.h"
-#elif defined(STM32F7)
-#include "stm32f7xx_hal.h"
-#elif defined(STM32G0)
-#include "stm32g0xx_hal.h"
-#elif defined(STM32G4)
-#include "stm32g4xx_hal.h"
-#else
-#error "SSD1306 library was tested only on STM32F0, STM32F1, STM32F3, STM32F4, STM32F7, STM32L0, STM32L1, STM32L4, STM32H7, STM32G0, STM32G4 MCU families. Please modify ssd1306.h if you know what you are doing. Also please send a pull request if it turns out the library works on other MCU's as well!"
-#endif
+//#if defined(STM32F0)
+//#include "stm32f0xx_hal.h"
+//#elif defined(STM32F1)
+//#include "stm32f1xx_hal.h"
+//#elif defined(STM32F4)
+//#include "stm32f4xx_hal.h"
+//#include "stm32f4xx_hal_gpio.h"
+//#elif defined(STM32L0)
+//#include "stm32l0xx_hal.h"
+//#elif defined(STM32L1)
+//#include "stm32l1xx_hal.h"
+//#elif defined(STM32L4)
+//#include "stm32l4xx_hal.h"
+//#elif defined(STM32F3)
+//#include "stm32f3xx_hal.h"
+//#elif defined(STM32H7)
+//#include "stm32h7xx_hal.h"
+//#elif defined(STM32F7)
+//#include "stm32f7xx_hal.h"
+//#elif defined(STM32G0)
+//#include "stm32g0xx_hal.h"
+//#elif defined(STM32G4)
+//#include "stm32g4xx_hal.h"
+//#else
+//#error "SSD1306 library was tested only on STM32F0, STM32F1, STM32F3, STM32F4, STM32F7, STM32L0, STM32L1, STM32L4, STM32H7, STM32G0, STM32G4 MCU families. Please modify ssd1306.h if you know what you are doing. Also please send a pull request if it turns out the library works on other MCU's as well!"
+//#endif
 
 #ifdef SSD1306_X_OFFSET
 #define SSD1306_X_OFFSET_LOWER (SSD1306_X_OFFSET & 0x0F)
@@ -94,7 +94,7 @@ _BEGIN_STD_C
 /* ^^^ SPI config ^^^ */
 
 #if defined(SSD1306_USE_I2C)
-extern I2C_HandleTypeDef SSD1306_I2C_PORT;
+//extern I2C_HandleTypeDef SSD1306_I2C_PORT;
 #elif defined(SSD1306_USE_SPI)
 extern SPI_HandleTypeDef SSD1306_SPI_PORT;
 #else
@@ -114,6 +114,9 @@ extern SPI_HandleTypeDef SSD1306_SPI_PORT;
 #ifndef SSD1306_BUFFER_SIZE
 #define SSD1306_BUFFER_SIZE   SSD1306_WIDTH * SSD1306_HEIGHT / 8
 #endif
+
+// Screenbuffer
+extern uint8_t SSD1306_Buffer[SSD1306_BUFFER_SIZE];             //CAA Make buffer global
 
 // Enumeration for screen colors
 typedef enum {
@@ -139,6 +142,13 @@ typedef struct {
     uint8_t y;
 } SSD1306_VERTEX;
 
+typedef struct {        //CAA Coordinates struct
+	uint8_t x1;    
+	uint8_t y1;   
+    uint8_t x2;
+    uint8_t y2;
+} COORDINATES;
+
 // Procedure definitions
 void ssd1306_Init(void);
 void ssd1306_Fill(SSD1306_COLOR color);
@@ -153,7 +163,7 @@ void ssd1306_DrawArcWithRadiusLine(uint8_t x, uint8_t y, uint8_t radius, uint16_
 void ssd1306_DrawCircle(uint8_t par_x, uint8_t par_y, uint8_t par_r, SSD1306_COLOR color);
 void ssd1306_FillCircle(uint8_t par_x,uint8_t par_y,uint8_t par_r,SSD1306_COLOR par_color);
 void ssd1306_Polyline(const SSD1306_VERTEX *par_vertex, uint16_t par_size, SSD1306_COLOR color);
-void ssd1306_DrawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD1306_COLOR color);
+void ssd1306_DrawRectangle(COORDINATES coordinates, SSD1306_COLOR color);
 void ssd1306_FillRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD1306_COLOR color);
 void ssd1306_DrawBitmap(uint8_t x, uint8_t y, const unsigned char* bitmap, uint8_t w, uint8_t h, SSD1306_COLOR color);
 
@@ -184,6 +194,6 @@ void ssd1306_WriteCommand(uint8_t byte);
 void ssd1306_WriteData(uint8_t* buffer, size_t buff_size);
 SSD1306_Error_t ssd1306_FillBuffer(uint8_t* buf, uint32_t len);
 
-_END_STD_C
+//_END_STD_C
 
 #endif // __SSD1306_H__

@@ -23,4 +23,22 @@ extern FontDef Font_11x18;
 #ifdef SSD1306_INCLUDE_FONT_16x26
 extern FontDef Font_16x26;
 #endif
+
+//CAA Added Fonts
+#ifdef SSD1306_INCLUDE_FONT_7x7
+extern FontDef Font_7x7;
+#endif
+#ifdef SSD1306_INCLUDE_FONT_6x7
+extern FontDef Font_6x7;
+#endif
+#ifdef SSD1306_INCLUDE_FONT_5x7
+extern FontDef Font_5x7;
+#endif
+#ifdef SSD1306_INCLUDE_FONT_4x7
+extern FontDef Font_4x7;
+#endif
+#ifdef SSD1306_INCLUDE_FONT_2x7
+extern FontDef Font_2x7;
+#endif
+
 #endif // __SSD1306_FONTS_H__
