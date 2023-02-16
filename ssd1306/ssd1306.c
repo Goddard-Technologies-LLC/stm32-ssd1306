@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>  // For memcpy
-
+#include "logging.h"
 
 static uint8_t SSD1306_Buffer_flag = 0;
 
@@ -10,6 +10,7 @@ void ssd1306_set_buffer_flag(void) {
     SSD1306_Buffer_flag = 1;
 }
 void ssd1306_clear_buffer_flag(void) {
+    ssd1306_Fill(Black);
     SSD1306_Buffer_flag = 0;
 }
 
